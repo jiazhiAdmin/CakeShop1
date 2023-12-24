@@ -1,0 +1,25 @@
+#wrapper{
+    .headTop{
+        background-color: brown;
+        height: 40px;
+        margin: 0 auto;
+        line-height: 30px;
+        .headTopMain{
+            overflow: hidden;
+            .left{
+                h5{
+                    float: left;
+                }
+                p{
+                    float: left;
+
+                    &:first-child{
+                        border-right:solid 1px aliceblue;
+                        margin-right: 2px;
+                        padding-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiazhi.mapper.OrderDetailMapper">
+    <resultMap id="orderDetailMap" type="com.jiazhi.entity.OrderDetail">
+        <id property="orderDetailId" column="order_detail_id" />
+        <result property="cakeId" column="cake_id" />
+        <result property="cakeQuantity" column="cake_quantity" />
+        <result property="cakePrice" column="cake_price" />
+        <result property="orderId" column="order_id" />
+        <result property="userId" column="user_id" />
+    </resultMap>
+
+    <insert id="addOrderDetail" parameterType="com.jiazhi.entity.OrderDetail">
+        INSERT INTO order_detail (order_detail_id, cake_id, cake_quantity, cake_price, order_id,user_id)
+        VALUES (#{orderDetailId}, #{cakeId}, #{cakeQuantity}, #{cakePrice}, #{orderId},#{userId})
+    </insert>
+
+
+    <select id="getOrderDetailByCakeId" resultType="java.lang.Integer">
+        select count(*) from order_detail WHERE cake_id=#{cakeId} and user_id=#{userId}
+    </select>
+
+
+    <update id="updateCakeQuantityByCakeId">
+        UPDATE order_detail SET cake_quantity = cake_quantity + 1 WHERE cake_id = #{cakeId}
+    </update>
+
+
+
+    <select id="getOrderDetailsByUserId" resultMap="orderDetailMap">
+        SELECT * FROM order_detail o WHERE o.user_id = #{userId}
+    </select>
+
+    <update id="increaseCakeQuantityByOrderDetailId" parameterType="java.lang.Integer" >
+        UPDATE order_detail SET cake_quantity = cake_quantity + 1 WHERE order_detail_id = #{orderDetailId}
+    </update>
+
+    <update id="decreaseCakeQuantityByOrderDetailId" parameterType="java.lang.Integer">
+        UPDATE order_detail SET cake_quantity = cake_quantity - 1 WHERE order_detail_id = #{orderDetailId}
+    </update>
+
+    <delete id="deleteOrderDetailById" parameterType="java.lang.Integer">
+        DELETE FROM order_detail WHERE order_detail_id = #{orderDetailId}
+    </delete>
+
+
+
+
+    <resultMap id="orderDetailResultMap" type="com.jiazhi.entity.OrderDetail">
+        <id property="orderDetailId" column="order_detail_id"/>
+        <result property="cakeId" column="cake_id"/>
+        <result property="cakeQuantity" column="cake_quantity"/>
+        <result property="cakePrice" column="cake_price"/>
+        <result property="orderId" column="order_id"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <select id="getOrderDetailById" parameterType="java.lang.Integer" resultMap="orderDetailResultMap">
+        SELECT * FROM order_detail WHERE order_detail_id = #{orderDetailId}
+    </select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jiazhi.mapper.CakeMapper">
+
+    <resultMap id="CakeResultMap" type="com.jiazhi.entity.Cake">
+        <id property="cakeId" column="cake_id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="cakeName" column="cake_name"/>
+        <result property="cakeInventory" column="cake_inventory"/>
+        <result property="cakeDescription" column="cake_description"/>
+        <result property="cakePrice" column="cake_price"/>
+        <result property="cakeCoverImage" column="cake_cover_image"/>
+        <result property="cakeDetailedPhoto1" column="cake_detailed_photo1"/>
+        <result property="cakeDetailedPhoto2" column="cake_detailed_photo2"/>
+    </resultMap>
+    <select id="getAllCakes"  resultMap="CakeResultMap">
+        select *
+        from cake c
+    </select>
+    <select id="getTypecakes" parameterType="java.lang.String" resultMap="CakeResultMap">
+        select c.*
+        from cake c
+        inner join type t
+        on t.type_id=c.cake_id
+        where t.type_name=#{typeName}
+    </select>
+    <select id="getCakeById" parameterType="java.lang.Integer" resultMap="CakeResultMap">
+        SELECT * FROM cake WHERE cake_id = #{cakeId}
+    </select>
+
+ <!--   <select id="searchCakesByName" resultMap="CakeResultMap">
+        SELECT *
+        FROM cake
+        WHERE cake_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>-->
+    <select id="searchCakesByName" resultMap="CakeResultMap">
+        SELECT * FROM cake
+        WHERE cake_name LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY cake_id
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="getTotalCakes" resultType="int">
+        SELECT COUNT(*) FROM cake
+        WHERE cake_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiazhi.mapper.OrderMapper">
+    <insert id="addOrder" parameterType="com.jiazhi.entity.Order" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO orders (user_id, order_name, order_date, order_quantity, order_total_amount, payment_status, payment_method, receiver, receiver_phone, delivery_address)
+        VALUES (#{userId}, #{orderName}, #{orderDate}, #{orderQuantity}, #{orderTotalAmount}, #{paymentStatus}, #{paymentMethod}, #{receiver}, #{receiverPhone}, #{deliveryAddress})
+    </insert>
+
+
+    <resultMap id="orderResultMap" type="com.jiazhi.entity.Order">
+        <id property="orderId" column="order_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderQuantity" column="order_quantity"/>
+        <result property="orderTotalAmount" column="order_total_amount"/>
+        <result property="paymentStatus" column="payment_status"/>
+        <result property="paymentMethod" column="payment_method"/>
+        <result property="receiver" column="receiver"/>
+        <result property="receiverPhone" column="receiver_phone"/>
+        <result property="deliveryAddress" column="delivery_address"/>
+    </resultMap>
+
+    <select id="getAllOrders" resultMap="orderResultMap">
+        SELECT * FROM orders
+    </select>
+</mapper>
